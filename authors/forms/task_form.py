@@ -19,20 +19,12 @@ class AuthorTaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = 'title', 'description', 'time', \
-            'time_unit', 'servings', 'servings_unit', \
-            'steps', 'cover'
+            'time_unit', 'steps', 'cover'
         widgets = {
             'cover': forms.FileInput(
                 attrs={
                     'class': 'span-2'
                 }
-            ),
-            'servings_unit': forms.Select(
-                choices=(
-                    ('Porções', 'Porções'),
-                    ('Pedaços', 'Pedaços'),
-                    ('Pessoas', 'Pessoas'),
-                ),
             ),
             'time_unit': forms.Select(
                 choices=(

@@ -30,8 +30,6 @@ class Migration(migrations.Migration):
                 ('slug', models.SlugField()),
                 ('time', models.IntegerField()),
                 ('time_unit', models.CharField(max_length=65)),
-                ('servings', models.IntegerField()),
-                ('servings_unit', models.CharField(max_length=65)),
                 ('steps', models.TextField()),
                 ('steps_is_html', models.BooleanField(default=False)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
