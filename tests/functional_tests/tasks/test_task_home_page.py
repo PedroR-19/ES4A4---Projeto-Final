@@ -33,7 +33,7 @@ class TaskHomePageFunctionalTest(TaskBaseFunctionalTest):
         )
 
         # Clica neste input e digita o termo de busca
-        # para encontrar a receita o título desejado
+        # para encontrar a task o título desejado
         search_input.send_keys(title_needed)
         search_input.send_keys(Keys.ENTER)
 
@@ -57,7 +57,7 @@ class TaskHomePageFunctionalTest(TaskBaseFunctionalTest):
         )
         page2.click()
 
-        # Vê que tem mais 2 receitas na página 2
+        # Vê que tem mais 2 tasks na página 2
         self.assertEqual(
             len(self.browser.find_elements(By.CLASS_NAME, 'task')),
             2

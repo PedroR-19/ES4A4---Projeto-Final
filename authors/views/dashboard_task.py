@@ -71,7 +71,7 @@ class DashboardTask(View):
 
             task.save()
 
-            messages.success(request, 'Sua receita foi salva com sucesso!')
+            messages.success(request, 'Sua task foi salva com sucesso!')
             return redirect(
                 reverse(
                     'authors:dashboard_task_edit', args=(
