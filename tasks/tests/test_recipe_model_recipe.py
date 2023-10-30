@@ -16,11 +16,11 @@ class TaskModelTest(TaskTestBase):
             title='Task Title',
             description='Task Description',
             slug='task-slug-for-no-defaults',
-            preparation_time=10,
-            preparation_time_unit='Minutos',
+            time=10,
+            time_unit='Minutos',
             servings=5,
             servings_unit='Porções',
-            preparation_steps='Task Preparation Steps',
+            steps='Task Preparation Steps',
         )
         task.full_clean()
         task.save()
@@ -29,7 +29,7 @@ class TaskModelTest(TaskTestBase):
     @parameterized.expand([
         ('title', 65),
         ('description', 165),
-        ('preparation_time_unit', 65),
+        ('time_unit', 65),
         ('servings_unit', 65),
     ])
     def test_task_fields_max_length(self, field, max_length):
@@ -37,11 +37,11 @@ class TaskModelTest(TaskTestBase):
         with self.assertRaises(ValidationError):
             self.task.full_clean()
 
-    def test_task_preparation_steps_is_html_is_false_by_default(self):
+    def test_task_steps_is_html_is_false_by_default(self):
         task = self.make_task_no_defaults()
         self.assertFalse(
-            task.preparation_steps_is_html,
-            msg='Task preparation_steps_is_html is not False',
+            task.steps_is_html,
+            msg='Task steps_is_html is not False',
         )
 
     def test_task_is_published_is_false_by_default(self):

@@ -2,6 +2,7 @@ from collections import defaultdict
 
 from django import forms
 from django.core.exceptions import ValidationError
+
 from tasks.models import Task
 from utils.django_forms import add_attr
 from utils.strings import is_positive_number
@@ -13,13 +14,13 @@ class AuthorTaskForm(forms.ModelForm):
 
         self._my_errors = defaultdict(list)
 
-        add_attr(self.fields.get('preparation_steps'), 'class', 'span-2')
+        add_attr(self.fields.get('steps'), 'class', 'span-2')
 
     class Meta:
         model = Task
-        fields = 'title', 'description', 'preparation_time', \
-            'preparation_time_unit', 'servings', 'servings_unit', \
-            'preparation_steps', 'cover'
+        fields = 'title', 'description', 'time', \
+            'time_unit', 'servings', 'servings_unit', \
+            'steps', 'cover'
         widgets = {
             'cover': forms.FileInput(
                 attrs={
@@ -33,7 +34,7 @@ class AuthorTaskForm(forms.ModelForm):
                     ('Pessoas', 'Pessoas'),
                 ),
             ),
-            'preparation_time_unit': forms.Select(
+            'time_unit': forms.Select(
                 choices=(
                     ('Minutos', 'Minutos'),
                     ('Horas', 'Horas'),
@@ -65,8 +66,8 @@ class AuthorTaskForm(forms.ModelForm):
 
         return title
 
-    def clean_preparation_time(self):
-        field_name = 'preparation_time'
+    def clean_time(self):
+        field_name = 'time'
         field_value = self.cleaned_data.get(field_name)
 
         if not is_positive_number(field_value):

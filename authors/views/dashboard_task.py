@@ -1,4 +1,3 @@
-from authors.forms.task_form import AuthorTaskForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http.response import Http404
@@ -6,6 +5,8 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
+
+from authors.forms.task_form import AuthorTaskForm
 from tasks.models import Task
 
 
@@ -65,7 +66,7 @@ class DashboardTask(View):
             task = form.save(commit=False)
 
             task.author = request.user
-            task.preparation_steps_is_html = False
+            task.steps_is_html = False
             task.is_published = False
 
             task.save()

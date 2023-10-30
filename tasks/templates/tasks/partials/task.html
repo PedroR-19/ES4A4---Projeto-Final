@@ -50,7 +50,7 @@
         <div class="task-meta task-preparation">
             <h3 class="task-meta-title"><i class="fas fa-stopwatch"></i> Preparo</h3>
             <div class="task-meta-text">
-                {{ task.preparation_time }} {{ task.preparation_time_unit }}
+                {{ task.time }} {{ task.time_unit }}
             </div>
         </div>
         <div class="task-meta task-servings">
@@ -72,10 +72,10 @@
 
     {% if is_detail_page is True %}
         <div class="preparation-steps">
-            {% if task.preparation_steps_is_html is True %}
-                {{ task.preparation_steps|safe }}
+            {% if task.steps_is_html is True %}
+                {{ task.steps|safe }}
             {% else %}
-                {{ task.preparation_steps|linebreaksbr }}
+                {{ task.steps|linebreaksbr }}
             {% endif %}
         </div>
     {% endif %}
