@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from recipes.models import Recipe
+from tasks.models import Task
 
 
 def register_view(request):
@@ -85,7 +85,7 @@ def logout_view(request):
 
 @login_required(login_url='authors:login', redirect_field_name='next')
 def dashboard(request):
-    recipes = Recipe.objects.filter(
+    tasks = Task.objects.filter(
         is_published=False,
         author=request.user
     )
@@ -93,6 +93,6 @@ def dashboard(request):
         request,
         'authors/pages/dashboard.html',
         context={
-            'recipes': recipes,
+            'tasks': tasks,
         }
     )

@@ -10,25 +10,25 @@
     {% include 'global/partials/messages.html' %}
 
     <div class="authors-dashboard-container">
-      <h3>Your recipes</h3>
+      <h3>Your tasks</h3>
 
       <ul>
-        {% for recipe in recipes %}
+        {% for task in tasks %}
           <li>
-            <a href="{% url 'authors:dashboard_recipe_edit' recipe.id %}">{{ recipe.title }}</a> - 
+            <a href="{% url 'authors:dashboard_task_edit' task.id %}">{{ task.title }}</a> - 
             <form 
             class="inline-form form-delete" 
-            action="{% url 'authors:dashboard_recipe_delete' %}" 
+            action="{% url 'authors:dashboard_task_delete' %}" 
             method='POST'
             >
               {% csrf_token %}
-              <input type="hidden" name="id" value="{{ recipe.id }}">
+              <input type="hidden" name="id" value="{{ task.id }}">
               <button class="plaintext-button" type="submit">❌</button>
             </form>
           </li>
         {% empty %}
           <li>
-            <p>You do not have recipes, please create one.</p>
+            <p>You do not have tasks, please create one.</p>
           </li>
         {% endfor %}
       </ul>
