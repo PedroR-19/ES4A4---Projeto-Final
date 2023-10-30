@@ -36,8 +36,8 @@ class AuthorTaskForm(forms.ModelForm):
             ),
             'time_unit': forms.Select(
                 choices=(
-                    ('Minutos', 'Minutos'),
-                    ('Horas', 'Horas'),
+                    ('Days', 'Days'),
+                    ('Weeks', 'Weeks'),
                 ),
             ),
         }
