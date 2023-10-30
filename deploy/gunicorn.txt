@@ -1,0 +1,75 @@
+###############################################################################
+# Replace
+# es4a4 to the name of the gunicorn file you want
+# pscianni to your user name
+# app_repo to the folder name of your project
+# project to the folder name where you find a file called wsgi.py
+#
+###############################################################################
+# Criando o arquivo es4a4.socket
+sudo nano /etc/systemd/system/es4a4.socket
+
+###############################################################################
+# Conteúdo do arquivo
+[Unit]
+Description=gunicorn blog socket
+
+[Socket]
+ListenStream=/run/es4a4.socket
+
+[Install]
+WantedBy=sockets.target
+
+###############################################################################
+# Criando o arquivo es4a4.service
+sudo nano /etc/systemd/system/es4a4.service
+
+###############################################################################
+# Conteúdo do arquivo
+[Unit]
+Description=Gunicorn daemon (You can change if you want)
+Requires=es4a4.socket
+After=network.target
+
+[Service]
+User=pscianni
+Group=www-data
+Restart=on-failure
+EnvironmentFile=/home/pscianni/app_repo/.env
+WorkingDirectory=/home/pscianni/app_repo
+# --error-logfile --enable-stdio-inheritance --log-level and --capture-output
+# are all for debugging purposes.
+ExecStart=/home/pscianni/app_repo/venv/bin/gunicorn \
+          --error-logfile /home/pscianni/app_repo/gunicorn-error-log \
+          --enable-stdio-inheritance \
+          --log-level "debug" \
+          --capture-output \
+          --access-logfile - \
+          --workers 6 \
+          --bind unix:/run/es4a4.socket \
+          project.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+
+###############################################################################
+# Ativando
+sudo systemctl start es4a4.socket
+sudo systemctl enable es4a4.socket
+
+# Checando
+sudo systemctl status es4a4.socket
+curl --unix-socket /run/es4a4.socket localhost
+sudo systemctl status es4a4
+
+# Restarting
+sudo systemctl restart es4a4.service
+sudo systemctl restart es4a4.socket
+sudo systemctl restart es4a4
+
+# After changing something
+sudo systemctl daemon-reload
+
+# Debugging
+sudo journalctl -u es4a4.service
+sudo journalctl -u es4a4.socket
