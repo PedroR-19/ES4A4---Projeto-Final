@@ -4,7 +4,10 @@
   {{ request.user.username }}. 
   <a href="{% url 'authors:dashboard' %}">See your task</a>, 
   <a href="{% url 'authors:dashboard_task_new' %}">create a new task</a> or  
-  {% include 'authors/partials/form_logout.html' %}
-  <a class="authors-logout-link" href="#">click here</a> to logout.
+  <form class="inline-form" action="{% url 'authors:logout' %}" method='POST'>
+    {% csrf_token %}
+    <input type="hidden" name="username" value="{{ request.user.username }}">
+    <button class="plaintext-button" type="submit">click here</button>
+  </form> to logout.
 </div>
 {% endif %}
