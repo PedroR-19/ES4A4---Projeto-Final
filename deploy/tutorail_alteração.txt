@@ -1,0 +1,12 @@
+TERMINAL LOCAL
+
+git add .
+git commit -m 'message'
+git push
+git push app_bare main
+
+TERMINAL SERVIDOR
+
+cd app_repo
+git pull origin main
+sudo systemctl restart es4a4
