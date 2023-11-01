@@ -1,53 +1,72 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <style>
+      /* Estilos para a caixa de entrada de mensagens /
+      #message {
+        background-color: white;
+        color: black;
+        border: none;
+        padding: 10px;
+      }
+
+      / Estilos para a área de mensagens /
+      #messages-container {
+        border: 1px solid #ccc;
+        padding: 10px;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+
+      / Estilos para o botão de enviar */
+      #send {
+        background-color: black;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
   <body>
     <div id="chat">
       <div id="messages-container">
-        <!-- Aqui serão exibidas as mensagens enviadas -->
+        <!-- Aqui serão exibidas as mensagens -->
       </div>
       <input type="text" id="message" placeholder="Digite sua mensagem...">
       <button id="send">Enviar</button>
     </div>
     <script>
       const socket = new WebSocket('ws://127.0.0.1:8000/chats/');
+      const messagesContainer = document.getElementById('messages-container');
 
-socket.onopen = (event) => {
-  console.log('Conexão estabelecida.');
-};
+      socket.onopen = (event) => {
+        console.log('Conexão estabelecida.');
+      };
 
-socket.onmessage = (event) => {
-  const messagesContainer = document.getElementById('messages-container');
-  const message = event.data;
+      socket.onmessage = (event) => {
+        const message = event.data;
+        displayMessage(message);
+      };
 
-  // Crie um elemento de parágrafo para exibir a mensagem
-  const messageElement = document.createElement('p');
-  messageElement.textContent = message;
+      document.getElementById('send').addEventListener('click', () => {
+        const messageInput = document.getElementById('message');
+        const message = messageInput.value;
+        sendMessage(message);
+        messageInput.value = '';
+      });
 
-  // Adicione a mensagem à área de mensagens
-  messagesContainer.appendChild(messageElement);
+      function displayMessage(message) {
+        const messageElement = document.createElement('p');
+        messageElement.textContent = message;
+        messagesContainer.appendChild(messageElement);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }
 
-  // Role a área de mensagens para baixo para exibir a mensagem mais recente
-  messagesContainer.scrollTop = messagesContainer.scrollHeight;
-};
-
-document.getElementById('send').addEventListener('click', () => {
-  const messageInput = document.getElementById('message');
-  const message = messageInput.value;
-  socket.send(message);
-
-  // Exibir a mensagem enviada na área de mensagens
-  const messagesContainer = document.getElementById('messages-container');
-  const messageElement = document.createElement('p');
-  messageElement.textContent = message;
-  messagesContainer.appendChild(messageElement);
-
-  // Limpar o campo de entrada
-  messageInput.value = '';
-
-  // Role a área de mensagens para baixo para exibir a mensagem mais recente
-  messagesContainer.scrollTop = messagesContainer.scrollHeight;
-});
-
+      function sendMessage(message) {
+        displayMessage('Você: ' + message);
+        socket.send(message);
+      }
     </script>
   </body>
 </html>
