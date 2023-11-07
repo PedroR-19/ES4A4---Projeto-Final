@@ -1,57 +1,74 @@
-<!DOCTYPE html>
-<html>
+{% extends 'global/base2.html' %}
+
+{% block title %}Chat | ({{ user }}) | {% endblock title %}
+
+{% block content %}
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
-  margin: 0 auto;
-  max-width: 800px;
-  padding: 0 20px;
+  <style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+h2 {
+    color: #333;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#display {
+    width: 80%;
+    margin: 20px auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #fff;
+    height: 300px;
+    overflow-y: scroll;
 }
 
 .container {
-  border: 2px solid #dedede;
-  background-color: #f1f1f1;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 10px 0;
+    width: 80%;
+    margin: 20px auto;
 }
 
-.darker {
-  border-color: #ccc;
-  background-color: #ddd;
+.container .darker {
+    border-color: #ccc;
+    background-color: #ddd;
 }
 
-.container::after {
-  content: "";
-  clear: both;
-  display: table;
+.container .darker b {
+    color: #333;
 }
 
-.container img {
-  float: left;
-  max-width: 60px;
-  width: 100%;
-  margin-right: 20px;
-  border-radius: 50%;
+.container .darker p {
+    color: #666;
 }
 
-.container img.right {
-  float: right;
-  margin-left: 20px;
-  margin-right:0;
+.container .darker .time-left {
+    color: #999;
 }
 
-.time-right {
-  float: right;
-  color: #aaa;
+form#post-form {
+    display: flex;
+    justify-content: space-between;
 }
 
-.time-left {
-  float: left;
-  color: #999;
+form#post-form input[type="text"] {
+    flex-grow: 1;
+    margin-right: 10px;
+    padding: 5px;
 }
-</style>
+
+form#post-form input[type="submit"] {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
 </head>
 <body>
@@ -93,38 +110,6 @@ setInterval(function(){
 
 
 <div class="container">
-    <style>
-    input[type=text], select {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    }
-
-    input[type=submit] {
-    width: 100%;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    }
-
-    input[type=submit]:hover {
-    background-color: #45a049;
-    }
-
-    div {
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
-    }
-    </style>
 
     <form id="post-form">
         {% csrf_token %}
@@ -158,5 +143,4 @@ setInterval(function(){
     document.getElementById('message').value = ''
   });
 </script>
-
-</html>
+{% endblock content %}
