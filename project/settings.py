@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'tasks',
     'authors',
-    'mychatapp',
+    'chat',
 ]
 
 MIDDLEWARE = [
